@@ -37,3 +37,8 @@ From backend directory `mvn spring-boot:run`
 - [Bootswatch](https://bootswatch.com/)
 - [ng2-bootstrap](http://valor-software.com/ngx-bootstrap/#/)
 - [Lodash](https://lodash.com/)
+
+### Would Like To Implement...
+- Input sanitization for event titles
+- Colors for various events
+- Backend in purely HQL syntax
