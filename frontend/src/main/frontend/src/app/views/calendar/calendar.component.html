@@ -1,0 +1,208 @@
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Event</h4>
+        <button type="button" class="close pull-right" (click)="addBack(); lgModal.hide(); " aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!editing">
+          <h5>Name</h5>
+          <p class="lead">
+          {{modalData?.event.title}}
+          </p>
+          <hr />
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Start Date</h5>
+              <p class="lead">
+              {{month[modalData?.event.start.getMonth()]}} {{modalData?.event.start.getDate()}} {{modalData?.event.start.getFullYear()}}
+              </p>
+            </div>
+            <div class="col-md-6">
+              <h5>End Date</h5>
+              <p class="lead">
+              {{month[modalData?.event.end.getMonth()]}} {{modalData?.event.end.getDate()}} {{modalData?.event.end.getFullYear()}}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Start Time</h5>
+              <p class="lead">
+              {{modalData?.event.start.getHours()}} : {{modalData?.event.start.getMinutes() < 10 ? '0':''}}{{modalData?.event.start.getMinutes()}}
+              </p>
+            </div>
+            <div class="col-md-6">
+              <h5>End Time</h5>
+              <p class="lead">
+              {{modalData?.event.end.getHours()}} : {{modalData?.event.end.getMinutes() < 10 ? '0':''}}{{modalData?.event.end.getMinutes()}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="editing">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="modalData?.event.title"
+            (keyup)="refresh.next()"
+            placeholder="{{modalData?.event.title}}"
+            >
+
+          <br />
+
+          <table class="table table-bordered">
+
+            <thead>
+            <tr>
+
+              <th>Starts at</th>
+              <th>Ends at</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr >
+              <td>
+                <datepicker [(ngModel)]="modalData?.event.start"></datepicker>
+                <timepicker [(ngModel)]="modalData?.event.start"></timepicker>
+              </td>
+              <td>
+                <datepicker [(ngModel)]="modalData?.event.end"></datepicker>
+                <timepicker [(ngModel)]="modalData?.event.end"></timepicker>
+              </td>
+            </tr>
+            </tbody>
+
+          </table>
+        </div>
+        <br />
+        <hr />
+        <a *ngIf="!editing" (click)="deleteEvent(modalData?.event.eventID); lgModal.hide();" class="btn btn-danger">Delete Event</a>
+        <a *ngIf="!editing" (click)="setEdit();" class="btn btn-warning">Make Changes</a>
+
+        <a *ngIf="editing" (click)="setEdit(); addBack(); lgModal.hide(); " class="btn btn-primary">Cancel</a>
+        <a *ngIf="editing" (click)="setEdit(); lgModal.hide(); updateEvent(modalData?.event.eventID);" class="btn btn-warning">Update</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #eventModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEventModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Event</h4>
+        <button type="button" class="close pull-right" (click)="eventModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newTitle"
+          (keyup)="refresh.next()"
+          placeholder="Add Event Title">
+
+        <br />
+
+        <table class="table table-bordered">
+
+          <thead>
+          <tr>
+
+            <th>Starts at</th>
+            <th>Ends at</th>
+            <th>Add</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr >
+            <td>
+              <datepicker [(ngModel)]="startDate" [activeDate]="viewDate"></datepicker>
+              <timepicker [(ngModel)]="startTime"></timepicker>
+            </td>
+            <td>
+              <datepicker [(ngModel)]="endDate" [activeDate]="viewDate"></datepicker>
+              <timepicker [(ngModel)]="endTime"></timepicker>
+            </td>
+            <td>
+              <div class="col-md-4">
+                <div class="btn btn-info" (click)="createEvent(); eventModal.hide();">
+                  Add Event
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="inner-container">
+
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary"
+            mwlCalendarPreviousView
+            (click)="dateChange($event)"
+            [view]="view"
+            [(viewDate)]="viewDate">
+            Previous
+          </div>
+          <div
+            class="btn btn-success"
+            mwlCalendarToday
+            (click)="dateChange($event)"
+            [(viewDate)]="viewDate">
+            Current Month
+          </div>
+          <div
+            class="btn btn-primary"
+            mwlCalendarNextView
+            (click)="dateChange($event)"
+            [view]="view"
+            [(viewDate)]="viewDate">
+            Next
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ month[viewDate.getMonth()] }} {{viewDate.getFullYear()}}</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="btn btn-info"
+            (click)="eventModal.show();">
+          Add {{ month[viewDate.getMonth()] }} Event
+        </div>
+      </div>
+    </div>
+
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="'month'"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day); "
+        (eventClicked)="handleEvent('Clicked', $event.event); lgModal.show();"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-month-view>
+    </div>
+  </div>
+</div>
