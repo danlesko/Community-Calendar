@@ -26,11 +26,7 @@ Follow these directions to start:
 3. Install the Angular CLI (Optional)
    1. `npm install -g @angular/cli@latest`
 
-Once this is done, you can run  
-`npm install`  
-in the
-`frontend/src/main/frontend`
-directory.
+Once this is done, you can run `npm install` in the `frontend/src/main/frontend` directory.
 
 ### References / Libraries Used
 - [Angular Calendar](https://mattlewis92.github.io/angular-calendar/#/kitchen-sink)
