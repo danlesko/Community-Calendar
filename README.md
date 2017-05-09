@@ -1,7 +1,7 @@
 # Community-Calendar
 Cisco coding challenge to create a simple calendar with CRUD operations. 
 
-The page is live [here](http://ec2-52-54-85-216.compute-1.amazonaws.com:8080/CalendarApp/)
+The page is live [here](http://ec2-52-54-85-216.compute-1.amazonaws.com:8080/CalendarApp/).
 
 The overall goal was to create a calendar that displayed all days for the current month, and then have a way to add, update, and delete events for a given day of the month. In addition to that, no events were to overlap, and if an attempt was made to create an overlapping event, an error is to be shown. 
 
