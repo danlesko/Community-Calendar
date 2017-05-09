@@ -11,6 +11,8 @@ I used a number of existing libraries as well to complete the application. Prima
 
 Once the application was completed, I created a war file and uploaded it to a Tomcat Server hosted on my personal Amazon EC2 instance. 
 
+To run locally simply clone the repo, navigate to `frontend/src/main/frontend` and run `npm install`.
+
 ### References / Libraries Used
 - [Angular Calendar](https://mattlewis92.github.io/angular-calendar/#/kitchen-sink)
 - [Bootswatch](https://bootswatch.com/)
